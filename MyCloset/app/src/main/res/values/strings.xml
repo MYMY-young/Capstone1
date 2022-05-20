@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">My Closet</string>
+    <string name="ID_text">Email</string>
+    <string name="password_text">password</string>
+    <string name="sign_in_text">sign in</string>
+    <string name="sign_up_text">sign up</string>
+    <string name="Address_input_text">Put your video address</string>
+    <string name="Done_button_text">DONE</string>
+    <string name="image_description">item</string>
+</resources>
