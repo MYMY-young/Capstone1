@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">AfterLogin</string>
+    <string name="Address_input_text">Put your video address</string>
+    <string name="Done_button_text">DONE</string>
+</resources>
