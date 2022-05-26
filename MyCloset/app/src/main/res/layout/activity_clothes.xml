@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".ClothesActivity">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/clothes_back_button"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:src="@drawable/arrow_gray_to_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ScrollView
-            android:id="@+id/category_scroll"
             android:layout_width="match_parent"
-            android:layout_height="379dp">
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            tools:ignore="SpeakableTextPresentCheck">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -18,168 +30,304 @@
                 android:orientation="vertical">
 
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
+                    android:id="@+id/line1"
+                    style="@style/line_style"
+                    android:baselineAligned="false"
+                    tools:showIn="@layout/activity_main">
 
-                    <ImageButton
-                        android:id="@+id/imageButton25"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                    <FrameLayout
+                        android:id="@+id/short_sleeve_top_frame"
+                        style="@style/frame_style">
 
-                    <ImageButton
-                        android:id="@+id/imageButton26"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <ImageView
+                            android:id="@+id/short_sleeve_top_image"
+                            style="@style/image_style"
+                            android:src="@drawable/short_sleeve_top" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton11"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="16dp"
-                        tools:layout_editor_absoluteY="143dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <CheckBox
+                            android:id="@+id/short_sleeve_top_button"
+                            style="@style/check_box_style"
+
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|start"
+                            android:text="@string/short_sleeve_top"
+                            android:textSize="16sp" />
+
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/long_sleeve_top_frame"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/frame_height"
+                        android:layout_weight="1">
+
+                        <ImageView
+                            android:id="@+id/Long_sleeve_top_image"
+                            style="@style/image_style"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:layout_gravity="center|top"
+                            android:src="@drawable/long_sleeve_top" />
+
+                        <CheckBox
+                            android:id="@+id/Long_sleeve_top_button"
+
+                            style="@style/check_box_style"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom|start"
+                            android:text="@string/long_sleeve_top" />
+                    </FrameLayout>
+
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/line2"
+                    style="@style/line_style"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/imageButton27"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                    <FrameLayout
+                        android:id="@+id/short_sleeve_outwear_frame"
+                        style="@style/frame_style">
 
-                    <ImageButton
-                        android:id="@+id/imageButton28"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <ImageView
+                            android:id="@+id/Short_sleeve_outwear_image"
+                            style="@style/image_style"
+                            android:layout_width="150dp"
+                            android:layout_height="150dp"
+                            android:src="@drawable/short_sleeve_outwear" />
 
-                    <ImageButton
-                        android:id="@+id/imageButton29"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <CheckBox
+                            android:id="@+id/Short_sleeve_outwear_button"
+                            style="@style/check_box_style"
+
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:text="@string/short_sleeve_outwear"
+                            android:textSize="16sp" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/Long_sleeve_outwear_frame"
+                        style="@style/frame_style">
+
+                        <ImageView
+                            android:id="@+id/Long_sleeve_outwear_image"
+                            style="@style/image_style"
+                            android:layout_height="150dp"
+                            android:src="@drawable/long_sleeve_outwear" />
+
+                        <CheckBox
+                            android:id="@+id/Long_sleeve_outwear_button"
+                            style="@style/check_box_style"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/Long_sleeve_outwear" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/line3"
+                    style="@style/line_style"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/imageButton30"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                    <FrameLayout
+                        android:id="@+id/Vest_frame"
+                        style="@style/frame_style">
 
-                    <ImageButton
-                        android:id="@+id/imageButton31"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <ImageView
+                            android:id="@+id/Vest_image"
+                            style="@style/image_style"
 
-                    <ImageButton
-                        android:id="@+id/imageButton32"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                            android:src="@drawable/vest" />
+
+                        <CheckBox
+                            android:id="@+id/Vest_button"
+                            style="@style/check_box_style"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/Vest" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/sling_frame"
+                        style="@style/frame_style">
+
+                        <ImageView
+                            android:id="@+id/sling_image"
+                            style="@style/image_style"
+
+                            android:src="@drawable/sling" />
+
+                        <CheckBox
+                            android:id="@+id/sling_button"
+                            style="@style/check_box_style"
+
+                            android:layout_height="wrap_content"
+                            android:text="@string/Sling" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/line4"
+                    style="@style/line_style"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/imageButton33"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                    <FrameLayout
+                        android:id="@+id/shorts_frame"
+                        style="@style/frame_style">
 
-                    <ImageButton
-                        android:id="@+id/imageButton35"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <ImageView
+                            android:id="@+id/shorts_image"
+                            style="@style/image_style"
+
+                            android:src="@drawable/shorts" />
+
+                        <CheckBox
+                            android:id="@+id/shorts_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Shorts" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/trousers_frame"
+                        style="@style/frame_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/trouser_image"
+                            style="@style/image_style"
+
+                            android:src="@drawable/trousers" />
+
+                        <CheckBox
+                            android:id="@+id/trouser_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Trousers" />
+                    </FrameLayout>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/line5"
+                    style="@style/line_style"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+
                     android:orientation="horizontal">
 
-                    <ImageButton
-                        android:id="@+id/imageButton36"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                    <FrameLayout
+                        android:id="@+id/skirt_frame"
+                        style="@style/frame_style">
 
-                    <ImageButton
-                        android:id="@+id/imageButton34"
-                        android:layout_width="94dp"
-                        android:layout_height="91dp"
-                        android:layout_weight="1"
-                        android:contentDescription="@string/image_description"
-                        tools:layout_editor_absoluteX="158dp"
-                        tools:layout_editor_absoluteY="16dp"
-                        tools:srcCompat="@tools:sample/avatars" />
+                        <ImageView
+                            android:id="@+id/skirt_image"
+                            style="@style/image_style"
+                            android:src="@drawable/skirt" />
+
+                        <CheckBox
+                            android:id="@+id/skirt_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Skirt" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/short_sleeve_dress_frame"
+                        style="@style/frame_style">
+
+                        <ImageView
+                            android:id="@+id/short_sleeve_dress_image"
+                            style="@style/image_style"
+                            android:src="@drawable/short_sleeve_dress" />
+
+                        <CheckBox
+                            android:id="@+id/short_sleeve_dress_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Short_sleeve_dress" />
+                    </FrameLayout>
                 </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line6"
+                    style="@style/line_style"
+                    android:layout_width="match_parent"
+
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/long_sleeve_dress_frame"
+                        style="@style/frame_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/long_sleeve_dress_image"
+                            style="@style/image_style"
+                            android:src="@drawable/long_sleeve_dress" />
+
+                        <CheckBox
+                            android:id="@+id/long_sleeve_dress_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Long_sleeve_dress" />
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:id="@+id/vest_dress_frame"
+                        style="@style/frame_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/vest_dress_image"
+                            style="@style/image_style"
+                            android:src="@drawable/vest_dress" />
+
+                        <CheckBox
+                            android:id="@+id/vest_dress_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Vest_dress" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/line7"
+                    style="@style/line_style"
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal">
+
+                    <FrameLayout
+                        android:id="@+id/sling_dress_frame"
+                        style="@style/frame_style"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ImageView
+                            android:id="@+id/sling_dress_image"
+                            style="@style/image_style"
+                            app:srcCompat="@drawable/sling_dress" />
+
+                        <CheckBox
+                            android:id="@+id/sling_dress_button"
+                            style="@style/check_box_style"
+                            android:text="@string/Sling_dress" />
+                    </FrameLayout>
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/selet_category_button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#2196F3"
+                    android:text="하이라이트 추출하기"
+                    android:textColor="#000000"
+                    android:textStyle="bold"
+                    app:backgroundTint="#72EFFF" />
 
             </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
 
 </layout>

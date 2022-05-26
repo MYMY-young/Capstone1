@@ -10,12 +10,19 @@
         <entry key="..\:/Users/youns/AndroidStudioProjects/MyCloset/app/src/main/res/layout/activity_main.xml" value="0.24947916666666667" />
         <entry key="..\:/Users/youns/AndroidStudioProjects/MyCloset/app/src/main/res/layout/activity_tmp.xml" value="0.109375" />
         <entry key="..\:/Users/youns/AndroidStudioProjects/MyCloset/app/src/main/res/layout/activity_url.xml" value="0.24947916666666667" />
-        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_clothes.xml" value="0.11503623188405797" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/drawable/border.xml" value="0.1" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/drawable/border_option.xml" value="0.1" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/drawable/border_url.xml" value="0.1" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/drawable/setting.xml" value="0.1" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_clothes.xml" value="0.264" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_clothes_contacts.xml" value="0.264" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_favorites.xml" value="0.264" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_info.xml" value="0.264" />
         <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_login.xml" value="0.223731884057971" />
-        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_main.xml" value="0.16799999999999998" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_main.xml" value="0.264" />
         <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_signup.xml" value="0.2" />
         <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_splash.xml" value="0.109375" />
-        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_url.xml" value="0.2" />
+        <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/layout/activity_url.xml" value="0.264" />
         <entry key="..\:/Users/youns/Documents/Capstone1/MyCloset/app/src/main/res/menu/toolbar_menu.xml" value="0.152" />
       </map>
     </option>
