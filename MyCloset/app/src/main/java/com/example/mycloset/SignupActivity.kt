@@ -11,12 +11,10 @@ import kotlinx.android.synthetic.main.activity_signup.*
 class SignupActivity : AppCompatActivity() {
 
     var _nameText: EditText? = null
-    var _addressText: EditText? = null
     var _emailText: EditText? = null
-    var _mobileText: EditText? = null
     var _passwordText: EditText? = null
     var _reEnterPasswordText: EditText? = null
-    var _backButton: ImageButton? = null
+    var _backButton: ImageView? = null
     var _signupButton: Button? = null
     var _loginLink: TextView? = null
 
@@ -25,13 +23,11 @@ class SignupActivity : AppCompatActivity() {
         setContentView(R.layout.activity_signup)
 
         _nameText = findViewById(R.id.input_name) as EditText
-        _addressText = findViewById(R.id.input_address) as EditText
         _emailText = findViewById(R.id.input_email) as EditText
-        _mobileText = findViewById(R.id.input_mobile) as EditText
         _passwordText = findViewById(R.id.input_password) as EditText
         _reEnterPasswordText = findViewById(R.id.input_reEnterPassword) as EditText
 
-        _backButton = findViewById(R.id.back_button) as ImageButton
+        _backButton = findViewById(R.id.signup_back_button) as ImageView
         _signupButton = findViewById(R.id.btn_signup) as Button
         _loginLink = findViewById(R.id.link_login) as TextView
 
@@ -56,9 +52,7 @@ class SignupActivity : AppCompatActivity() {
         _signupButton!!.isEnabled = false
 
         val name = _nameText!!.text.toString()
-        val address = _addressText!!.text.toString()
         val email = _emailText!!.text.toString()
-        val mobile = _mobileText!!.text.toString()
         val password = _passwordText!!.text.toString()
         val reEnterPassword = _reEnterPasswordText!!.text.toString()
 
@@ -82,9 +76,7 @@ class SignupActivity : AppCompatActivity() {
         var valid = true
 
         val name = _nameText!!.text.toString()
-        val address = _addressText!!.text.toString()
         val email = _emailText!!.text.toString()
-        val mobile = _mobileText!!.text.toString()
         val password = _passwordText!!.text.toString()
         val reEnterPassword = _reEnterPasswordText!!.text.toString()
 
@@ -95,26 +87,11 @@ class SignupActivity : AppCompatActivity() {
             _nameText!!.error = null
         }
 
-        if (address.isEmpty()) {
-            _addressText!!.error = "주소를 입력해주세요"
-            valid = false
-        } else {
-            _addressText!!.error = null
-        }
-
-
         if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             _emailText!!.error = "이메일을 입력해주세요"
             valid = false
         } else {
             _emailText!!.error = null
-        }
-
-        if (mobile.isEmpty()) {
-            _mobileText!!.error = "휴대폰 번호를 입력해주세요"
-            valid = false
-        } else {
-            _mobileText!!.error = null
         }
 
         if (password.isEmpty() || password.length < 4 || password.length > 10) {

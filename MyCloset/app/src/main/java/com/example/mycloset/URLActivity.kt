@@ -13,8 +13,8 @@ import com.google.android.youtube.player.YouTubePlayerView
 
 class URLActivity : YouTubeBaseActivity() {
     var _backButton: ImageView? = null
+    var _nextButton: ImageView? = null
     var _showButton: Button? = null
-    var _nextButton: Button? = null
     var _addressText: EditText? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,18 +22,18 @@ class URLActivity : YouTubeBaseActivity() {
         setContentView(R.layout.activity_url)
 
         _backButton = findViewById(R.id.url_back_button) as ImageView
-        _showButton = findViewById(R.id.show_button) as Button
-        _nextButton = findViewById(R.id.next_button) as Button
+        _nextButton = findViewById(R.id.url_next_button) as ImageView
+        _showButton = findViewById(R.id.url_show_button) as Button
         _addressText = findViewById(R.id.Address_input) as EditText
 
         _backButton!!.setOnClickListener { finish() }
+        _nextButton!!.setOnClickListener {
+            startActivity(Intent(this, ClothesActivity::class.java))
+        }
         _showButton!!.setOnClickListener {
             val videoId = _addressText!!.text.toString().substring(_addressText!!.text.toString().lastIndexOf("/") + 1)
             showVideo(videoId)
             _showButton!!.isEnabled = true
-        }
-        _nextButton!!.setOnClickListener {
-            startActivity(Intent(this, ClothesActivity::class.java))
         }
     }
 

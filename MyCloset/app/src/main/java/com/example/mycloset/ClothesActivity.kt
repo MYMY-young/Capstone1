@@ -11,7 +11,7 @@ class ClothesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_clothes)
 
-        _backButton = findViewById(R.id.url_back_button) as ImageView
+        _backButton = findViewById(R.id.clothes_back_button) as ImageView
         _backButton!!.setOnClickListener { finish() }
 
     }
