@@ -36,6 +36,7 @@
         android:id="@+id/horizontalScrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline02"
         app:layout_constraintTop_toBottomOf="@id/guideline01">
 
         <LinearLayout
@@ -50,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/clothes_select"
                 android:fontFamily="@font/bae"
                 android:text="ALL"
                 android:textSize="24sp"
@@ -61,6 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/clothes_select"
                 android:fontFamily="@font/bae"
                 android:text="TOP"
                 android:textSize="24sp"
@@ -72,6 +75,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/clothes_select"
                 android:fontFamily="@font/bae"
                 android:text="BOTTOM"
                 android:textSize="24sp"
@@ -83,6 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/clothes_select"
                 android:fontFamily="@font/bae"
                 android:text="DRESS"
                 android:textSize="24sp"
@@ -94,6 +99,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:layout_weight="1"
+                android:background="@drawable/clothes_select"
                 android:fontFamily="@font/bae"
                 android:text="OUTWEAR"
                 android:textSize="24sp"
@@ -115,7 +121,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.19" />
+        app:layout_constraintGuide_percent="0.16" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/CategoryRecyclerview"
@@ -128,6 +134,7 @@
         android:id="@+id/ClothesRecyclerview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline02"
         tools:layout_editor_absoluteX="36dp">

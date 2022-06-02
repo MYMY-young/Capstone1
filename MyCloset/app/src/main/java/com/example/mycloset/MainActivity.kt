@@ -37,5 +37,10 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, FavoritesActivity::class.java))
             _favButton!!.isEnabled = true
         }
+
+        _videoButton!!.setOnClickListener {
+            startActivity(Intent(this, VideoActivity::class.java))
+            _videoButton!!.isEnabled = true
+        }
     }
 }
