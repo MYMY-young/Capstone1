@@ -3,10 +3,14 @@ package com.example.mycloset
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_signup.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+
 
 class SignupActivity : AppCompatActivity() {
 
@@ -17,6 +21,9 @@ class SignupActivity : AppCompatActivity() {
     var _backButton: ImageView? = null
     var _signupButton: Button? = null
     var _loginLink: TextView? = null
+
+
+
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +38,10 @@ class SignupActivity : AppCompatActivity() {
         _signupButton = findViewById(R.id.btn_signup) as Button
         _loginLink = findViewById(R.id.link_login) as TextView
 
+
+
+
+
         _backButton!!.setOnClickListener { finish() }
         _signupButton!!.setOnClickListener { signup() }
 
@@ -41,29 +52,82 @@ class SignupActivity : AppCompatActivity() {
         }
     }
 
-    fun signup() {
+    private fun signup() {
         Log.d(TAG, "Signup")
 
-        if (!validate()) {
-            onSignupFailed()
-            return
+       if (!validate()) {
+           onSignupFailed()
+           return
         }
-
         _signupButton!!.isEnabled = false
+
 
         val name = _nameText!!.text.toString()
         val email = _emailText!!.text.toString()
         val password = _passwordText!!.text.toString()
         val reEnterPassword = _reEnterPasswordText!!.text.toString()
 
-        onSignupSuccess()
+        //retrofit2
+       // val data : UserInfo = UserInfo(email, name, password)
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.38.212.229/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(SignUpService::class.java)!!
+
+
+        val callLoadNotice = api.loadNotice(email, name, password)
+
+        callLoadNotice.enqueue(object : Callback<SignResult> {
+            override fun onResponse(
+                call: Call<SignResult>,
+                response: Response<SignResult>
+            ) {
+
+
+                if(response.isSuccessful) {
+
+                    if(response.body()?.success == "true") {
+                        Log.d(TAG, "성공 : ${response.raw()}")
+                        Log.d(TAG, "성공 : ${response.body()}")
+
+                        onSignupSuccess()
+                    }
+                    else{
+                        Log.d(TAG, "실패 : ${response.raw()}")
+                        Log.d(TAG, "실패 : ${response.body()}")
+
+                        Toast.makeText(baseContext, "${response.body()!!.errMessage}", Toast.LENGTH_LONG).show()
+
+                    }
+                }
+                else{
+                    Log.d(TAG, "실패 : ${response.raw()}")
+                    Log.d(TAG, "실패 : ${response.body()}")
+
+                    Toast.makeText(baseContext, "${response.body()!!.errMessage}", Toast.LENGTH_LONG).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call<SignResult>, t: Throwable) {
+                Log.d(TAG, "실패 : $t")
+                Toast.makeText(baseContext, "네트워크 상태를 확인하세요", Toast.LENGTH_LONG).show()
+                _signupButton!!.isEnabled = true
+            }
+        })
+
+
+
+
     }
 
 
     fun onSignupSuccess() {
         Toast.makeText(baseContext, "회원가입이 완료되었습니다", Toast.LENGTH_LONG).show()
         _signupButton!!.isEnabled = true
-        startActivity(Intent(this, LoginActivity::class.java))
+        //startActivity(Intent(this, LoginActivity::class.java))
         finish()
     }
 

@@ -7,6 +7,11 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class LoginActivity : AppCompatActivity() {
 
@@ -38,8 +43,13 @@ class LoginActivity : AppCompatActivity() {
         edit.apply() // 적용하기
     }
 
-    fun login() {
+    private fun login() {
         Log.d(TAG, "Login")
+
+
+
+
+
         if (!validate()) {
             //onLoginFailed()
             Toast.makeText(applicationContext, "이메일과 패스워드를 제대로 입력해주세요", Toast.LENGTH_LONG).show()
@@ -50,9 +60,68 @@ class LoginActivity : AppCompatActivity() {
         val email = _emailText!!.text.toString()
         val password = _passwordText!!.text.toString()
 
+
+        //retrofit2
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://3.38.212.229/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+        val api = retrofit.create(SignInService::class.java)!!
+
+
+        val callLoadLogin = api.loadLogin(email, password)
+
+
+        callLoadLogin.enqueue(object : Callback<SignResult> {
+            override fun onResponse(
+                call: Call<SignResult>,
+                response: Response<SignResult>
+            ) {
+                Log.d(TAG, "test: ${response.body()}")
+                Log.d(TAG, "err test: ${response.errorBody()}")
+
+                if(response.isSuccessful){
+
+
+                   if(response.body()?.success == "true"){
+                        Log.d(TAG, "성공 : ${response.raw()}")
+                        Log.d(TAG, "성공 : ${response.body()}")
+
+                        Toast.makeText(baseContext, "로그인 성공", Toast.LENGTH_LONG).show()
+                        loginSuccess(email)
+                    }
+                   else{
+                        Log.d(TAG, "실패 : ${response.raw()}")
+                        Log.d(TAG, "실패 : ${response.body()}")
+
+                        Toast.makeText(baseContext, " ${response.body()!!.errMessage}", Toast.LENGTH_LONG).show()
+                        _loginButton!!.isEnabled = true
+
+                    }
+
+               }
+                else{
+                   Log.d(TAG, "실패 : ${response.raw()}")
+                   Toast.makeText(baseContext, "로그인 실패, 서버가 응답하지 않음", Toast.LENGTH_LONG).show()
+               }
+
+            }
+
+            override fun onFailure(call: Call<SignResult>, t: Throwable) {
+                Log.d(TAG, "실패 : $t")
+                Toast.makeText(baseContext, "이메일 또는 패스워드를 잘못 입력했습니다", Toast.LENGTH_LONG).show()
+
+            }
+        })
+
+
+    }
+
+    private fun loginSuccess(email : String){
         saveLogin(email)
         _loginButton!!.isEnabled = true
         startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
     override fun onBackPressed() {
@@ -60,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
         moveTaskToBack(true)
     }
 
-    fun validate(): Boolean {
+   private fun validate(): Boolean {
         var valid = true
 
         val email = _emailText!!.text.toString()
