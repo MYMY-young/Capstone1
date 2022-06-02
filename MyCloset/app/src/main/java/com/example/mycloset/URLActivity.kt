@@ -2,20 +2,25 @@ package com.example.mycloset
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.ImageView
+import android.util.Log
+import android.widget.*
 import com.google.android.youtube.player.YouTubeBaseActivity
 import com.google.android.youtube.player.YouTubeInitializationResult
 import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayerView
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class URLActivity : YouTubeBaseActivity() {
     var _backButton: ImageView? = null
     var _nextButton: ImageView? = null
     var _showButton: Button? = null
     var _addressText: EditText? = null
+
+    val TAG = "URLActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +50,60 @@ class URLActivity : YouTubeBaseActivity() {
                 player: YouTubePlayer,
                 wasRestored: Boolean
             ) {
-                if (!wasRestored) {
-                    player.cueVideo(videoId)
-                }
+                //retrofit2
+                val retrofit = Retrofit.Builder()
+                    .baseUrl("http://3.38.212.229/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+                val api = retrofit.create(LinkService::class.java)!!
+
+
+                val callLoadLogin = api.loadLink(_addressText?.text.toString())
+
+
+                callLoadLogin.enqueue(object : Callback<SignResult> {
+                    override fun onResponse(
+                        call: Call<SignResult>,
+                        response: Response<SignResult>
+                    ) {
+                        Log.d(TAG, "body: ${response.body()}")
+                        Log.d(TAG, "raw: ${response.raw()}")
+
+                        if(response.isSuccessful){
+
+
+                            if(response.body()?.success == "true"){
+                                Log.d(TAG, "성공 : ${response.raw()}")
+                                Log.d(TAG, "성공 : ${response.body()}")
+
+                                if (!wasRestored) {
+                                    player.cueVideo(videoId)
+                                }
+
+                            }
+                            else{
+                                Log.d(TAG, "실패 : ${response.raw()}")
+                                Log.d(TAG, "실패 : ${response.body()}")
+
+                                Toast.makeText(baseContext, " ${response.body()!!.errMessage}", Toast.LENGTH_LONG).show()
+                            }
+
+                        }
+                        else{
+                            Log.d(TAG, "실패 : ${response.raw()}")
+                            Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
+                        }
+
+                    }
+
+                    override fun onFailure(call: Call<SignResult>, t: Throwable) {
+                        Log.d(TAG, "실패 : $t")
+                        Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
+
+                    }
+                })
+                //end retrofit2
+
             }
             override fun onInitializationFailure(
                 provider: YouTubePlayer.Provider?,

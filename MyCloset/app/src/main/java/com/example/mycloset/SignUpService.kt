@@ -27,4 +27,15 @@ interface SignInService {
     ): Call<SignResult>
 }
 
+interface LinkService {
+
+    @FormUrlEncoded
+    @POST("upload/link")
+    fun loadLink(
+        @Field("link")link : String
+
+    ): Call<SignResult>
+}
+
+
 

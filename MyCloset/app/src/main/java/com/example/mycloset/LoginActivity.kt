@@ -77,8 +77,6 @@ class LoginActivity : AppCompatActivity() {
                 call: Call<SignResult>,
                 response: Response<SignResult>
             ) {
-                Log.d(TAG, "test: ${response.body()}")
-                Log.d(TAG, "err test: ${response.errorBody()}")
 
                 if(response.isSuccessful){
 
