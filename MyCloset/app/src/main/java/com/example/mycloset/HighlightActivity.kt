@@ -4,6 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.android.synthetic.main.activity_favorites.*
+import kotlinx.android.synthetic.main.activity_highlight.*
+
+var highList = arrayListOf<HighInfo>(
+    HighInfo("1_1"),
+    HighInfo("1_2")
+)
 
 class HighlightActivity : AppCompatActivity() {
     var _mainButton: ImageView? = null
@@ -17,5 +25,12 @@ class HighlightActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             _mainButton!!.isEnabled = true
         }
+
+        val adapter = HighListAdapter(this, highList)
+        HighRecyclerview.adapter = adapter
+
+        val lay = LinearLayoutManager(this)
+        HighRecyclerview.layoutManager = lay
+        HighRecyclerview.setHasFixedSize(true)
     }
 }

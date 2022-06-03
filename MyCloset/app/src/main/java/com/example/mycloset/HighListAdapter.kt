@@ -8,16 +8,16 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.mycloset.ClothesListAdapter.Holder
+import com.example.mycloset.HighListAdapter.Holder
 
-class ClothesListAdapter(val context: Context, val itemList : ArrayList<ClothesInfo>) :
+class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>) :
     RecyclerView.Adapter<Holder>() {
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
         val image = itemView?.findViewById<ImageView>(R.id.image_name)
         val clothes = itemView?.findViewById<TextView>(R.id.clothes_name)
-        val url = itemView?.findViewById<TextView>(R.id.url_name)
+        val select = itemView?.findViewById<Button>(R.id.select_button)
 
-        fun bind(item: ClothesInfo, context: Context) {
+        fun bind(item: HighInfo, context: Context) {
             if(item.imagename != ""){
                 val resourceId = context.resources.getIdentifier(item.imagename,"drawable", context.packageName)
                 image?.setImageResource(resourceId)
@@ -25,7 +25,10 @@ class ClothesListAdapter(val context: Context, val itemList : ArrayList<ClothesI
                 image?.setImageResource(R.drawable.closet_logo)
             }
             clothes?.text = item.clothesname
-            url?.text = "URL: " + item.urlname
+            select!!.setOnClickListener {
+                if(select.isSelected == true) select.isSelected = false
+                else select.isSelected = true
+            }
         }
     }
 
@@ -34,7 +37,7 @@ class ClothesListAdapter(val context: Context, val itemList : ArrayList<ClothesI
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view = LayoutInflater.from(context).inflate(R.layout.activity_clothes_contacts, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.activity_high_contacts, parent, false)
         return Holder(view)
     }
 

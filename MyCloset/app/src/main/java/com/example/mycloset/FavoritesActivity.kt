@@ -45,9 +45,7 @@ class FavoritesActivity : AppCompatActivity() {
 
         all_favorites.setOnClickListener{
             reset()
-            //var allList = arrayListOf<ClothesInfo>(topList, *bottomList, *dressList, *outwearList)
             var allList = topList.plus(bottomList).plus(dressList).plus(outwearList)
-            //var allList = topList + bottomList + dressList + outwearList
             val adapter = ClothesListAdapter(this, ArrayList<ClothesInfo>(allList))
             ClothesRecyclerview.adapter = adapter
             all_favorites.isSelected = true
