@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Intent
+import android.media.Image
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
@@ -16,9 +17,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class URLActivity : YouTubeBaseActivity() {
     var _backButton: ImageView? = null
-    var _nextButton: ImageView? = null
+    var _nextButton: Button? = null
     var _showButton: Button? = null
     var _addressText: EditText? = null
+    var _mainButton: ImageView? = null
 
     val TAG = "URLActivity"
 
@@ -27,9 +29,10 @@ class URLActivity : YouTubeBaseActivity() {
         setContentView(R.layout.activity_url)
 
         _backButton = findViewById(R.id.url_back_button) as ImageView
-        _nextButton = findViewById(R.id.url_next_button) as ImageView
+        _nextButton = findViewById(R.id.url_next_button) as Button
         _showButton = findViewById(R.id.url_show_button) as Button
         _addressText = findViewById(R.id.Address_input) as EditText
+        _mainButton = findViewById(R.id.url_main_button) as ImageView
 
         _backButton!!.setOnClickListener { finish() }
         _nextButton!!.setOnClickListener {
@@ -39,6 +42,10 @@ class URLActivity : YouTubeBaseActivity() {
             val videoId = _addressText!!.text.toString().substring(_addressText!!.text.toString().lastIndexOf("/") + 1)
             showVideo(videoId)
             _showButton!!.isEnabled = true
+        }
+        _mainButton!!.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            _mainButton!!.isEnabled = true
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.ImageView
 class ClothesActivity : AppCompatActivity() {
     var _backButton: ImageView? = null
     var _nextButton: Button? = null
+    var _mainButton: ImageView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -16,11 +17,16 @@ class ClothesActivity : AppCompatActivity() {
 
         _backButton = findViewById(R.id.clothes_back_button) as ImageView
         _nextButton = findViewById(R.id.clothes_next_button) as Button
+        _mainButton = findViewById(R.id.clothes_main_button) as ImageView
 
         _backButton!!.setOnClickListener { finish() }
         _nextButton!!.setOnClickListener {
             startActivity(Intent(this, HighlightActivity::class.java))
             _nextButton!!.isEnabled = true
+        }
+        _mainButton!!.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+            _mainButton!!.isEnabled = true
         }
     }
 }
