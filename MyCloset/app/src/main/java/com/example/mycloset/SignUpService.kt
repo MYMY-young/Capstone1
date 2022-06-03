@@ -32,6 +32,7 @@ interface LinkService {
     @FormUrlEncoded
     @POST("upload/link")
     fun loadLink(
+        @Header("cookie")cookie : String,
         @Field("link")link : String
 
     ): Call<SignResult>

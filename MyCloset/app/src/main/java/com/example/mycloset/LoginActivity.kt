@@ -1,5 +1,6 @@
 package com.example.mycloset
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,13 +8,23 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class LoginActivity : AppCompatActivity() {
+
+    //쿠키설정
+   // var cookieJar = PersistentCookieJar(SetCookieCache(), SharedPrefsCookiePersistor(this))
+
+
 
     var _emailText: EditText? = null
     var _passwordText: EditText? = null
@@ -23,6 +34,7 @@ class LoginActivity : AppCompatActivity() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
 
         _loginButton = findViewById(R.id.sign_in_button) as Button
         _signupButton = findViewById(R.id.sign_up_button) as Button
@@ -62,8 +74,11 @@ class LoginActivity : AppCompatActivity() {
 
 
         //retrofit2
+      // val client = OkHttpClient.Builder().cookieJar(cookieJar).build()
+
         val retrofit = Retrofit.Builder()
             .baseUrl("http://3.38.212.229/")
+         //  .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(SignInService::class.java)!!
@@ -77,7 +92,10 @@ class LoginActivity : AppCompatActivity() {
                 call: Call<SignResult>,
                 response: Response<SignResult>
             ) {
+                Common.init( response.headers().get("Set-Cookie").toString())
+                Log.d(TAG, Common.returnCookie())
 
+                Log.d(TAG, "header: ${response.headers()}")
                 if(response.isSuccessful){
 
 
@@ -101,14 +119,16 @@ class LoginActivity : AppCompatActivity() {
                 else{
                    Log.d(TAG, "실패 : ${response.raw()}")
                    Toast.makeText(baseContext, "로그인 실패, 서버가 응답하지 않음", Toast.LENGTH_LONG).show()
-               }
+                    _loginButton!!.isEnabled = true
+
+                }
 
             }
 
             override fun onFailure(call: Call<SignResult>, t: Throwable) {
                 Log.d(TAG, "실패 : $t")
                 Toast.makeText(baseContext, "이메일 또는 패스워드를 잘못 입력했습니다", Toast.LENGTH_LONG).show()
-
+                _loginButton?.isEnabled = true
             }
         })
 
