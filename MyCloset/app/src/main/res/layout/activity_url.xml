@@ -17,11 +17,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/url_next_button"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:id="@+id/url_main_button"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginEnd="20dp"
-        android:src="@drawable/arrow_gray_to_right"
+        android:src="@drawable/home_button"
         app:layout_constraintBottom_toTopOf="@+id/guideline_url_01"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -95,6 +95,27 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/guideline_url_01" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_url_02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <Button
+        android:id="@+id/url_next_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:text="옷 카테고리 선택하기"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_url_02" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
