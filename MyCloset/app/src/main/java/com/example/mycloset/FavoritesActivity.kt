@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -46,6 +47,7 @@ class FavoritesActivity : AppCompatActivity() {
     }
 
     fun readFav() {
+        if(!File("/data/data/com.example.mycloset/files/myclothes.txt").exists()) return
          File("/data/data/com.example.mycloset/files/myclothes.txt").forEachLine {
             var clothes = it.toString().split("/")
             allList.add(ClothesInfo(clothes[0], clothes[1]))
@@ -69,7 +71,8 @@ class FavoritesActivity : AppCompatActivity() {
 
         _backButton = findViewById(R.id.fav_back_button) as ImageView
         _backButton!!.setOnClickListener{
-            finish()
+            _backButton!!.isEnabled = true
+            startActivity(Intent(this, MainActivity::class.java))
         }
 
         all_favorites.setOnClickListener{
