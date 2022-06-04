@@ -21,6 +21,8 @@ class URLActivity : YouTubeBaseActivity() {
     var _addressText: EditText? = null
     var _mainButton: ImageView? = null
 
+
+
     val TAG = "URLActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -132,4 +134,6 @@ class URLActivity : YouTubeBaseActivity() {
         })
         //end retrofit2
     }
+
+
 }

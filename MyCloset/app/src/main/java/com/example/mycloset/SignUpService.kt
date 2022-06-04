@@ -38,5 +38,15 @@ interface LinkService {
     ): Call<SignResult>
 }
 
+interface ClothesService{
+
+    @FormUrlEncoded
+    @POST("upload/clothes")
+    fun loadClothes(
+        @Header("cookie")cookie : String,
+        @Field("clothes")clothe : String
+    ): Call<SignResult>
+}
+
 
 

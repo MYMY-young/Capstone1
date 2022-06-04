@@ -14,18 +14,23 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        val pref = getSharedPreferences("loginEmail", MODE_PRIVATE)
-        val savedEmail = pref.getString("email", "").toString()
+     //   val pref = getSharedPreferences("loginEmail", MODE_PRIVATE)
+      //  val savedEmail = pref.getString("email", "").toString()
+
+      //  Handler().postDelayed({
+         //   if(savedEmail.equals("")){
+        //        startActivity(Intent(this, LoginActivity::class.java))
+        //        finish()
+        //    }else{
+         //       startActivity(Intent(this, MainActivity::class.java))
+         //       Toast.makeText(this, "로그인 하였습니다", Toast.LENGTH_SHORT).show()
+         //       finish()
+         //   }
+      //  }, SPLASH_TIME_OUT)
 
         Handler().postDelayed({
-            if(savedEmail.equals("")){
-                startActivity(Intent(this, LoginActivity::class.java))
-                finish()
-            }else{
-                startActivity(Intent(this, MainActivity::class.java))
-                Toast.makeText(this, "로그인 하였습니다", Toast.LENGTH_SHORT).show()
-                finish()
-            }
-        }, SPLASH_TIME_OUT)
+            startActivity(Intent(this, LoginActivity::class.java))
+                   finish()}, SPLASH_TIME_OUT
+        )
     }
 }

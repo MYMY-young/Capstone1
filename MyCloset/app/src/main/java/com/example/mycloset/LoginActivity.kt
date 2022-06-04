@@ -2,6 +2,7 @@ package com.example.mycloset
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -40,7 +41,16 @@ class LoginActivity : AppCompatActivity() {
         _signupButton = findViewById(R.id.sign_up_button) as Button
         _passwordText = findViewById(R.id.Password_input) as EditText
         _emailText = findViewById(R.id.Email_input) as EditText
-        _loginButton!!.setOnClickListener { login() }
+        _loginButton!!.setOnClickListener {
+            //임시 테스트
+            _loginButton!!.isEnabled = true
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+            //
+
+
+
+            login() }
 
         _signupButton!!.setOnClickListener {
             startActivity(Intent(this, SignupActivity::class.java))
@@ -57,8 +67,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun login() {
         Log.d(TAG, "Login")
-
-
 
 
 
@@ -127,7 +135,7 @@ class LoginActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<SignResult>, t: Throwable) {
                 Log.d(TAG, "실패 : $t")
-                Toast.makeText(baseContext, "이메일 또는 패스워드를 잘못 입력했습니다", Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
                 _loginButton?.isEnabled = true
             }
         })
