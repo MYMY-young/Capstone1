@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycloset.HighListAdapter.Holder
+import java.io.*
 
-class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>) :
+class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>, val clothesList: ArrayList<String>) :
     RecyclerView.Adapter<Holder>() {
     inner class Holder(itemView: View?) : RecyclerView.ViewHolder(itemView!!){
         val image = itemView?.findViewById<ImageView>(R.id.image_name)
@@ -26,8 +28,15 @@ class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>) 
             }
             clothes?.text = item.clothesname
             select!!.setOnClickListener {
-                if(select.isSelected == true) select.isSelected = false
-                else select.isSelected = true
+                if(select.isSelected == true) {
+                    select.isSelected = false
+                }
+                else {
+                    select.isSelected = true
+                    clothesList.add(item.imagename + '/' + item.clothesname + '\n')
+                    for(i in 0.. clothesList.size - 1 step(1))
+                        Log.d("clothes adapter", item.clothesname)
+                }
             }
         }
     }
@@ -43,6 +52,7 @@ class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>) 
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         holder.bind(itemList[position],context)
-    }
 
+
+    }
 }
