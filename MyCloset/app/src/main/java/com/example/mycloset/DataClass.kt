@@ -1,8 +1,7 @@
 package com.example.mycloset
 
 import okhttp3.CookieJar
-
-
+import java.io.File
 
 
 data class UserInfo(

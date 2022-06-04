@@ -1,10 +1,11 @@
 package com.example.mycloset
 
-class ClothesInfo(val check: String) {
-    var imagename: String = ""
-    var clothesname: String = ""
-    var urlname: String = ""
+data class ClothesInfo(val image: String, val clothes: String) {
+    var imagename: String = image
+    var clothesname: String = clothes
+    var urlname: String = "Url: "
 
+    /*
     init {
         val hint = check.split("_")
         when (hint[0].toInt()) {
@@ -45,4 +46,5 @@ class ClothesInfo(val check: String) {
     //fun saveinfo():String{
       //  return String.format("%d_%d_%d",this.kind_num,this.name_num,this.option_num)
     //}
+    */
 }

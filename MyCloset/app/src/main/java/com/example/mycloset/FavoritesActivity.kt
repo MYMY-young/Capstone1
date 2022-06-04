@@ -1,11 +1,17 @@
 package com.example.mycloset
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_favorites.*
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 
+/*
 var topList = arrayListOf<ClothesInfo>(
     ClothesInfo("1_1"),
     ClothesInfo("1_2")
@@ -20,11 +26,16 @@ var dressList = arrayListOf<ClothesInfo>(
 var outwearList = arrayListOf<ClothesInfo>(
     ClothesInfo("4_1"),
     ClothesInfo("4_2")
-)
+)*/
 
 class FavoritesActivity : AppCompatActivity() {
 
     var _backButton: ImageView? = null
+    var allList = ArrayList<ClothesInfo>()
+    var topList = ArrayList<ClothesInfo>()
+    var bottomList = ArrayList<ClothesInfo>()
+    var dressList = ArrayList<ClothesInfo>()
+    var outwearList = ArrayList<ClothesInfo>()
 
     fun reset() {
         all_favorites.isSelected = false
@@ -34,9 +45,27 @@ class FavoritesActivity : AppCompatActivity() {
         outwear_favorites.isSelected = false
     }
 
+    fun readFav() {
+         File("/data/data/com.example.mycloset/files/myclothes.txt").forEachLine {
+            var clothes = it.toString().split("/")
+            allList.add(ClothesInfo(clothes[0], clothes[1]))
+             if(clothes[1].contains("top", true) || clothes[1].contains("vest", true) || clothes[1].contains("sling", true))
+                 topList.add(ClothesInfo(clothes[0], clothes[1]))
+             if(clothes[1].contains("shorts", true) || clothes[1].contains("trousers", true) || clothes[1].contains("skirt", true))
+                 bottomList.add(ClothesInfo(clothes[0], clothes[1]))
+             if(clothes[1].contains("dress", true))
+                 dressList.add(ClothesInfo(clothes[0], clothes[1]))
+             if(clothes[1].contains("outwear", true))
+                 outwearList.add(ClothesInfo(clothes[0], clothes[1]))
+
+             Log.d("clothes", it.toString())
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorites)
+        readFav()
 
         _backButton = findViewById(R.id.fav_back_button) as ImageView
         _backButton!!.setOnClickListener{
@@ -45,10 +74,8 @@ class FavoritesActivity : AppCompatActivity() {
 
         all_favorites.setOnClickListener{
             reset()
-            //var allList = arrayListOf<ClothesInfo>(topList, *bottomList, *dressList, *outwearList)
-            var allList = topList.plus(bottomList).plus(dressList).plus(outwearList)
-            //var allList = topList + bottomList + dressList + outwearList
-            val adapter = ClothesListAdapter(this, ArrayList<ClothesInfo>(allList))
+            //var allList = topList.plus(bottomList).plus(dressList).plus(outwearList)
+            val adapter = ClothesListAdapter(this, allList)
             ClothesRecyclerview.adapter = adapter
             all_favorites.isSelected = true
         }
