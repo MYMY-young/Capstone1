@@ -1,8 +1,10 @@
 package com.example.mycloset
 
 import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -19,7 +21,7 @@ import java.io.File
 
 class ClothesActivity : AppCompatActivity() {
 
-    var downloadId : Long = -1L
+
 
     val TAG = "ClothesActivity"
     var _backButton: ImageView? = null
@@ -71,7 +73,7 @@ class ClothesActivity : AppCompatActivity() {
 
         //변수 초기화
         initVariable()
-       // downloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+        // downloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
 
         _short_sleeve_top.setOnClickListener {
@@ -180,7 +182,7 @@ class ClothesActivity : AppCompatActivity() {
 //                //딜레이 후 시작할 코드 작성
 //            }, 600) // 0.6초 정도 딜레이를 준 후 시작
 
-           // success()
+            // success()
             retrofit2Service()
 
 
@@ -195,27 +197,6 @@ class ClothesActivity : AppCompatActivity() {
 //        request.addRequestHeader("cookie", Common.returnCookie())
 
 
-    private fun downloadService(uri : String,  filename : String){
-       var downloadManager : DownloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-
-        val file = File(getExternalFilesDir(null), filename)
-        val Url = "http://54.180.134.56/media${uri}"
-        val request = DownloadManager.Request(Uri.parse(Url))
-            .setTitle(filename)
-            .setDescription(filename)
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationUri(Uri.fromFile(file))
-            .setAllowedOverMetered(true)
-            .setAllowedOverRoaming(true)
-            .addRequestHeader("authorization", Common.returnCookie())
-
-
-        downloadId = downloadManager.enqueue(request)
-        Log.d("DownloadHTTP", "path : " + file.path)
-
-    }
-
-
     private fun retrofit2Service() {
         if (result == "/") {
             Toast.makeText(baseContext, "한 개 이상 옷을 선택해 주세요", Toast.LENGTH_SHORT).show()
@@ -228,12 +209,13 @@ class ClothesActivity : AppCompatActivity() {
         RetrofitClient.resetInstance()
         val retrofit = RetrofitClient.getInstance()
         val api = retrofit.create(ClothesService::class.java)!!
-       // val api = ApiClient.getApiClient().create(ClothesService::class.java)
+        // val api = ApiClient.getApiClient().create(ClothesService::class.java)
 
         Log.d(TAG, "레트로핏 전에 쿠키 확인 ${Common.returnCookie()}")
         Log.d(TAG, "레트로핏 전에 url 확인 ${Common.returnVideo()}")
 
-        val callLoadLogin = api.loadClothes(Common.returnCookie(),Common.returnVideo(),
+        val callLoadLogin = api.loadClothes(
+            Common.returnCookie(), Common.returnVideo(),
             short_sleeve_top,
             long_sleeve_top,
             short_sleeve_outwear,
@@ -258,6 +240,12 @@ class ClothesActivity : AppCompatActivity() {
                 Log.d(TAG, "body: ${response.body()}")
                 Log.d(TAG, "raw: ${response.raw()}")
                 Log.d(TAG, "select test: ${result}")
+
+//                val intentFilter = IntentFilter()
+//                intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
+//                intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED)
+//                registerReceiver(onDownloadComplete, intentFilter)
+
                 if (response.isSuccessful) {
                     var body = response.body()
 
@@ -266,7 +254,8 @@ class ClothesActivity : AppCompatActivity() {
                         Log.d("downcontent", temp.toString())
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
                                 Log.d("downcontent", "파일이름: ${i.substring(i.lastIndexOf("/") + 1)}")
                             }
                         }
@@ -278,7 +267,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -290,7 +280,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -302,7 +293,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -314,7 +306,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -326,7 +319,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -338,7 +332,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -350,7 +345,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -362,7 +358,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
                                 Log.d("downcontent", "파일이름: ${i.substring(i.lastIndexOf("/") + 1)}")
 
                             }
@@ -375,7 +372,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -387,7 +385,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -399,7 +398,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -411,7 +411,8 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                downloadService(i,  i.substring(i.lastIndexOf("/") + 1))
+                                var downloadId: Long = -1L
+                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
                             }
                         }
@@ -431,16 +432,12 @@ class ClothesActivity : AppCompatActivity() {
 //                    Common.setvest_dress(body?.vest_dress)
 //                    Common.setlong_sleeved_outwear(body?.long_sleeved_dress)
 
-                     Toast.makeText(baseContext, "하이라트 생성 완료", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "하이라트 생성 완료", Toast.LENGTH_SHORT).show()
 
 
+                    //   downcontent()
 
-
-
-
-                 //   downcontent()
-
-                 //  success()
+                     success()
 
                 } else {
                     Log.d(TAG, "OnResponse 실패 : ${response.raw()}")
@@ -448,7 +445,7 @@ class ClothesActivity : AppCompatActivity() {
                     Log.d(TAG, "cookie: ${Common.returnCookie()}")
 
 
-                   // Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_SHORT).show()
                 }
 
             }
@@ -464,7 +461,92 @@ class ClothesActivity : AppCompatActivity() {
 
     }
 
-    private fun success(){
+    //    private val onDownloadComplete = object : BroadcastReceiver() {
+//        override fun onReceive(context: Context, intent: Intent) {
+//            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)
+//            if (DownloadManager.ACTION_DOWNLOAD_COMPLETE.equals(intent.action)) {
+//                if (downloadId == id) {
+//                    val query: DownloadManager.Query = DownloadManager.Query()
+//                    query.setFilterById(id)
+//                    var cursor = downloadManager.query(query)
+//                    if (!cursor.moveToFirst()) {
+//                        return
+//                    }
+//
+//                    var columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+//                    var status = cursor.getInt(columnIndex)
+//                    if (status == DownloadManager.STATUS_SUCCESSFUL) {
+//                        Toast.makeText(context, "Download succeeded", Toast.LENGTH_SHORT).show()
+//                    } else if (status == DownloadManager.STATUS_FAILED) {
+//                        Toast.makeText(context, "Download failed", Toast.LENGTH_SHORT).show()
+//                    }
+//                }
+//            } else if (DownloadManager.ACTION_NOTIFICATION_CLICKED.equals(intent.action)) {
+//                Toast.makeText(context, "Notification clicked", Toast.LENGTH_SHORT).show()
+//            }
+//        }
+//    }
+    private fun downloadService(uri: String, filename: String, downloadId : Long) {
+        var downloadManager: DownloadManager =
+            getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+
+        val file = File(getExternalFilesDir(null), filename)
+        val Url = "http://54.180.134.56/media/${uri}"
+        Log.d("uri test", Url)
+        Log.d("file name test", filename)
+
+        val request = DownloadManager.Request(Uri.parse(Url))
+            .setTitle(filename)
+            .setDescription(filename)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+            .setDestinationUri(Uri.fromFile(file))
+            .setAllowedOverMetered(true)
+            .setAllowedOverRoaming(true)
+            .addRequestHeader("authorization", Common.returnCookie())
+
+        var id = downloadManager.enqueue(request)
+       // downloadId = downloadManager.enqueue(request)
+        while(true){
+            if(getStatus(id, downloadManager) == "Successful")break
+
+        }
+        Log.d("DownloadHTTP", "path : " + file.path)
+
+    }
+
+    private fun getStatus(id: Long, downloadManager: DownloadManager): String {
+        val query: DownloadManager.Query = DownloadManager.Query()
+        query.setFilterById(id)
+        var cursor = downloadManager.query(query)
+        if (!cursor.moveToFirst()) {
+            Log.e(TAG, "Empty row")
+            return "Wrong downloadId"
+        }
+
+        var columnIndex = cursor.getColumnIndex(DownloadManager.COLUMN_STATUS)
+        var status = cursor.getInt(columnIndex)
+        var columnReason = cursor.getColumnIndex(DownloadManager.COLUMN_REASON)
+        var reason = cursor.getInt(columnReason)
+        var statusText: String
+
+        when (status) {
+            DownloadManager.STATUS_SUCCESSFUL -> statusText = "Successful"
+            DownloadManager.STATUS_FAILED -> {
+                statusText = "Failed: $reason"
+            }
+            DownloadManager.STATUS_PENDING -> statusText = "Pending"
+            DownloadManager.STATUS_RUNNING -> statusText = "Running"
+            DownloadManager.STATUS_PAUSED -> {
+                statusText = "Paused: $reason"
+            }
+            else -> statusText = "Unknown"
+        }
+
+        return statusText
+    }
+
+
+    private fun success() {
         startActivity(Intent(this, HighlightActivity::class.java))
         _nextButton!!.isEnabled = true
         finish()

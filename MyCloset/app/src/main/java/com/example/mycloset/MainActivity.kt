@@ -50,21 +50,21 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        var downloadManager : DownloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        var downloadId : Long = -1L
-        val file = File(getExternalFilesDir(null), "892XUqlKPH0106.jpg")
-        val Url = "http://54.180.134.56/media/exp19/ll/0+skirt/892XUqlKPH0106.jpg"
-        val request = DownloadManager.Request(Uri.parse(Url))
-            .setTitle("892XUqlKPH0106.jpg")
-            .setDescription("892XUqlKPH0106.jpg")
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-            .setDestinationUri(Uri.fromFile(file))
-            .setAllowedOverMetered(true)
-            .setAllowedOverRoaming(true)
-            .addRequestHeader("authorization", Common.returnCookie())
-
-
-        downloadId = downloadManager.enqueue(request)
-        Log.d("DownloadHTTP", "path : " + file.path)
+//        var downloadManager : DownloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+//        var downloadId : Long = -1L
+//        val file = File(getExternalFilesDir(null), "892XUqlKPH0106.jpg")
+//        val Url = "http://54.180.134.56/media/exp19/ll/0+skirt/892XUqlKPH0106.jpg"
+//        val request = DownloadManager.Request(Uri.parse(Url))
+//            .setTitle("892XUqlKPH0106.jpg")
+//            .setDescription("892XUqlKPH0106.jpg")
+//            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+//            .setDestinationUri(Uri.fromFile(file))
+//            .setAllowedOverMetered(true)
+//            .setAllowedOverRoaming(true)
+//            .addRequestHeader("authorization", Common.returnCookie())
+//
+//
+//        downloadId = downloadManager.enqueue(request)
+//        Log.d("DownloadHTTP", "path : " + file.path)
     }
 }
