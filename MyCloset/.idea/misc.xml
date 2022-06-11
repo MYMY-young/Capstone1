@@ -36,11 +36,19 @@
         <entry key="..\:/capstone/my/MyCloset/app/src/main/res/layout/activity_url.xml" value="0.25364583333333335" />
         <entry key="..\:/capstone/my/MyCloset/app/src/main/res/layout/activity_video.xml" value="0.35052083333333334" />
         <entry key="..\:/capstone/my/MyCloset/app/src/main/res/layout/activity_video_contacts.xml" value="0.35052083333333334" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/drawable/progress_bg.xml" value="0.2175" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/drawable/progress_image.xml" value="0.2175" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/drawable/setting.xml" value="0.2175" />
         <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_clothes.xml" value="0.25364583333333335" />
         <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_high_contacts.xml" value="0.25364583333333335" />
         <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_highlight.xml" value="0.25364583333333335" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_info.xml" value="0.171875" />
         <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_login.xml" value="0.21145833333333333" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_main.xml" value="0.25364583333333335" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_signup.xml" value="0.31354166666666666" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_url.xml" value="0.31354166666666666" />
         <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/activity_video.xml" value="0.21145833333333333" />
+        <entry key="..\:/capstone/real/Capstone1/MyCloset/app/src/main/res/layout/dialog_progress.xml" value="0.21041666666666667" />
       </map>
     </option>
   </component>

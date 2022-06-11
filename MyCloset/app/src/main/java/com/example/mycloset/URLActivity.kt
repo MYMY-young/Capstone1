@@ -21,6 +21,7 @@ class URLActivity : YouTubeBaseActivity() {
     var _addressText: EditText? = null
     var _mainButton: ImageView? = null
 
+    var chk = false
 
 
     val TAG = "URLActivity"
@@ -37,23 +38,36 @@ class URLActivity : YouTubeBaseActivity() {
 
         _backButton!!.setOnClickListener { finish() }
         _nextButton!!.setOnClickListener {
-            startActivity(Intent(this, ClothesActivity::class.java))
+
+            if (chk) {
+                startActivity(Intent(this, ClothesActivity::class.java))
+            }
+            else{
+                Toast.makeText(baseContext, "동영상 주소를 입력하세요", Toast.LENGTH_SHORT).show()
+
+            }
         }
+
         _showButton!!.setOnClickListener {
-            val videoId = _addressText!!.text.toString().substring(_addressText!!.text.toString().lastIndexOf("/") + 1)
-            showVideo(videoId)
+            val videoId = _addressText!!.text.toString()
+                .substring(_addressText!!.text.toString().lastIndexOf("/") + 1)
+            //showVideo(videoId)
+            Common.setVideo(_addressText?.text.toString())
+            Log.d(TAG, "video url: ${ Common.returnVideo()}")
+            if(Common.returnVideo() != null)chk = true
             _showButton!!.isEnabled = true
+           // retrofitService()
         }
         _mainButton!!.setOnClickListener {
+
             startActivity(Intent(this, MainActivity::class.java))
             _mainButton!!.isEnabled = true
+            finish()
         }
     }
 
-    fun showVideo(videoId: String) {
+    private fun showVideo(videoId: String) {
 
-        //retrofit2 실행, url 전달
-        retrofitService()
 
 
         val youtubeView = findViewById<YouTubePlayerView>(R.id.youtubeView)
@@ -69,71 +83,73 @@ class URLActivity : YouTubeBaseActivity() {
                 }
 
 
-
             }
+
             override fun onInitializationFailure(
                 provider: YouTubePlayer.Provider?,
                 result: YouTubeInitializationResult?
-            ) { }
-        })
-    }
-
-    private fun retrofitService(){
-        //retrofit2
-        val retrofit = Retrofit.Builder()
-            .baseUrl("http://3.38.212.229/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val api = retrofit.create(LinkService::class.java)!!
-
-
-
-        val callLoadLogin = api.loadLink(Common.returnCookie(),_addressText?.text.toString())
-
-
-
-        callLoadLogin.enqueue(object : Callback<SignResult> {
-            override fun onResponse(
-                call: Call<SignResult>,
-                response: Response<SignResult>
             ) {
-                Log.d(TAG, "body: ${response.body()}")
-                Log.d(TAG, "raw: ${response.raw()}")
-
-                if(response.isSuccessful){
-
-
-                    if(response.body()?.success == "true"){
-                        Log.d(TAG, "성공 : ${response.raw()}")
-                        Log.d(TAG, "성공 : ${response.body()}")
-                        Toast.makeText(baseContext, "추출 성공", Toast.LENGTH_LONG).show()
-
-
-
-                    }
-                    else{
-                        Log.d(TAG, "실패 : ${response.raw()}")
-                        Log.d(TAG, "실패 : ${response.body()}")
-
-                        Toast.makeText(baseContext, " ${response.body()!!.errMessage}", Toast.LENGTH_LONG).show()
-                    }
-
-                }
-                else{
-                    Log.d(TAG, "OnResponse 실패 : ${response.raw()}")
-                    Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
-                }
-
-            }
-
-            override fun onFailure(call: Call<SignResult>, t: Throwable) {
-                Log.d(TAG, "OnFailure 실패 : $t")
-                Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
-
             }
         })
-        //end retrofit2
     }
+
+//    private fun retrofitService() {
+//        //retrofit2
+//        val retrofit = Retrofit.Builder()
+//            .baseUrl("http://54.180.134.56/")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//        val api = retrofit.create(LinkService::class.java)!!
+//
+//
+//        val callLoadLogin = api.loadLink(Common.returnCookie(), _addressText?.text.toString())
+//
+//
+//
+//        callLoadLogin.enqueue(object : Callback<SignResult> {
+//            override fun onResponse(
+//                call: Call<SignResult>,
+//                response: Response<SignResult>
+//            ) {
+//                Log.d(TAG, "body: ${response.body()}")
+//                Log.d(TAG, "raw: ${response.raw()}")
+//
+//                if (response.isSuccessful) {
+//
+//
+//                    if (response.body()?.success == "true") {
+//                        Log.d(TAG, "성공 : ${response.raw()}")
+//                        Log.d(TAG, "성공 : ${response.body()}")
+//                        Toast.makeText(baseContext, "추출 성공", Toast.LENGTH_LONG).show()
+//                        chk = true
+//
+//
+//                    } else {
+//                        Log.d(TAG, "실패 : ${response.raw()}")
+//                        Log.d(TAG, "실패 : ${response.body()}")
+//
+//                        Toast.makeText(
+//                            baseContext,
+//                            " ${response.body()!!.errMessage}",
+//                            Toast.LENGTH_LONG
+//                        ).show()
+//                    }
+//
+//                } else {
+//                    Log.d(TAG, "OnResponse 실패 : ${response.raw()}")
+//                    Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
+//                }
+//
+//            }
+//
+//            override fun onFailure(call: Call<SignResult>, t: Throwable) {
+//                Log.d(TAG, "OnFailure 실패 : $t")
+//                Toast.makeText(baseContext, "서버가 응답하지 않음", Toast.LENGTH_LONG).show()
+//
+//            }
+//        })
+//        //end retrofit2
+//    }
 
 
 }

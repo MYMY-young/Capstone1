@@ -71,7 +71,7 @@ class SignupActivity : AppCompatActivity() {
        // val data : UserInfo = UserInfo(email, name, password)
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://3.38.212.229/")
+            .baseUrl("http://54.180.134.56/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val api = retrofit.create(SignUpService::class.java)!!

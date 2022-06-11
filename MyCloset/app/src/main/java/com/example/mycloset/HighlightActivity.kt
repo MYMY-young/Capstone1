@@ -1,6 +1,10 @@
 package com.example.mycloset
+import android.app.DownloadManager
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -18,6 +22,10 @@ var highList = arrayListOf<HighInfo>(
 )
 
 class HighlightActivity : AppCompatActivity() {
+
+
+
+    val TAG = "HighlightActivity"
     var _mainButton: ImageView? = null
     var _nextButton: Button? = null
     //var _clothesfile = File("clothes.txt")
@@ -26,6 +34,9 @@ class HighlightActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_highlight)
+
+
+
         _mainButton = findViewById(R.id.high_main_button) as ImageView
         _nextButton = findViewById(R.id.high_next_button) as Button
 
@@ -52,7 +63,12 @@ class HighlightActivity : AppCompatActivity() {
         val lay = LinearLayoutManager(this)
         HighRecyclerview.layoutManager = lay
         HighRecyclerview.setHasFixedSize(true)
+
+
     }
+
+
+
 }
 
 
