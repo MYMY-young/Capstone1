@@ -11,6 +11,7 @@ import android.widget.Button
 
 import android.widget.ImageView
 import android.widget.Toast
+import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_highlight.*
@@ -36,7 +37,11 @@ class HighlightActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_highlight)
 
-
+        val _videoView = findViewById<VideoView>(R.id.videoView)
+        val path = Uri.parse("/storage/self/primary/Android/data/com.example.mycloset/files/person_01+long_sleeved_outwear.mp4")
+        _videoView.setVideoURI(path)
+        _videoView.requestFocus()
+        _videoView.start()
 
         _mainButton = findViewById(R.id.high_main_button) as ImageView
         _nextButton = findViewById(R.id.high_next_button) as Button

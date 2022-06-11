@@ -183,7 +183,7 @@ class ClothesActivity : AppCompatActivity() {
 //            }, 600) // 0.6초 정도 딜레이를 준 후 시작
 
             // success()
-            retrofit2Service()
+           retrofit2Service()
 
 
         }
@@ -435,7 +435,7 @@ class ClothesActivity : AppCompatActivity() {
                     Toast.makeText(baseContext, "하이라트 생성 완료", Toast.LENGTH_SHORT).show()
 
 
-                    //   downcontent()
+
 
                      success()
 
