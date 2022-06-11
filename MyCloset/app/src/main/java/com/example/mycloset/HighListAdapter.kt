@@ -33,7 +33,7 @@ class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>, 
                 }
                 else {
                     select.isSelected = true
-                    clothesList.add(item.imagename + '/' + item.clothesname + '\n')
+                    clothesList.add(item.imagename + '+' + item.clothesname + '+' + "https://youtu.be/RmuL-BPFi2Q\n")
                     for(i in 0.. clothesList.size - 1 step(1))
                         Log.d("clothes adapter", item.clothesname)
                 }

@@ -18,7 +18,8 @@ import java.io.File
 
 var highList = arrayListOf<HighInfo>(
     HighInfo("1_1"),
-    HighInfo("1_2")
+    HighInfo("1_2"),
+    HighInfo("2_1")
 )
 
 class HighlightActivity : AppCompatActivity() {

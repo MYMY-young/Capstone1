@@ -49,16 +49,16 @@ class FavoritesActivity : AppCompatActivity() {
     fun readFav() {
         if(!File("/data/data/com.example.mycloset/files/myclothes.txt").exists()) return
          File("/data/data/com.example.mycloset/files/myclothes.txt").forEachLine {
-            var clothes = it.toString().split("/")
-            allList.add(ClothesInfo(clothes[0], clothes[1]))
+            var clothes = it.toString().split("+")
+            allList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
              if(clothes[1].contains("top", true) || clothes[1].contains("vest", true) || clothes[1].contains("sling", true))
-                 topList.add(ClothesInfo(clothes[0], clothes[1]))
+                 topList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
              if(clothes[1].contains("shorts", true) || clothes[1].contains("trousers", true) || clothes[1].contains("skirt", true))
-                 bottomList.add(ClothesInfo(clothes[0], clothes[1]))
+                 bottomList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
              if(clothes[1].contains("dress", true))
-                 dressList.add(ClothesInfo(clothes[0], clothes[1]))
+                 dressList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
              if(clothes[1].contains("outwear", true))
-                 outwearList.add(ClothesInfo(clothes[0], clothes[1]))
+                 outwearList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
 
              Log.d("clothes", it.toString())
         }

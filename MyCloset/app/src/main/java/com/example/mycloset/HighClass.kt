@@ -10,12 +10,12 @@ class HighInfo(val check: String) {
             1 -> {
                 when (hint[1].toInt()) {
                     1 -> {
-                        imagename = "white_short_sleeve_top";
-                        clothesname = "White Short Sleeve Top";
+                        imagename = "long_sleeved_outwear1";
+                        clothesname = "Long Sleeved Outwear";
                     }
                     2 -> {
-                        imagename = "blue_long_sleeve_top";
-                        clothesname = "Blue Long Sleeve Top";
+                        imagename = "long_sleeved_outwear2";
+                        clothesname = "Long Sleeved Outwear";
                     }
                     else -> {
                         imagename = ""; clothesname = ""
@@ -25,8 +25,8 @@ class HighInfo(val check: String) {
             2 -> {
                 when (hint[1].toInt()) {
                     1 -> {
-                        imagename = "blue_jeans";
-                        clothesname = "Blue Jeans";
+                        imagename = "skirt1";
+                        clothesname = "Skirt";
                     }
                     else -> {
                         imagename = ""; clothesname = ""
