@@ -1,13 +1,14 @@
 const express = require('express');
 const passport = require('passport');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, verifyToken } = require('./middlewares');
 
 const router = express.Router();
 
 /* 회원가입 라우터 */
-router.post('/join', isNotLoggedIn ,async(req,res,next)=>{ //isNotLoggedIn 미들웨어를 통해 검사
+router.post('/join', /*isNotLoggedIn ,*/async(req,res,next)=>{
     const { email, nick, password } = req.body;
     try{
         const exUser = await User.findOne({ where: { email:email }});
@@ -29,7 +30,7 @@ router.post('/join', isNotLoggedIn ,async(req,res,next)=>{ //isNotLoggedIn 미�
     }
 })
 
-/* 로그인 라우터 */
+/* 로그인 라우터 (session)
 router.post('/login', isNotLoggedIn, (req,res,next)=>{
     passport.authenticate('local', (authError, user, info) => { //done이 두번째 인수를 실행한다.
         if(authError) {
@@ -41,23 +42,64 @@ router.post('/login', isNotLoggedIn, (req,res,next)=>{
                 success: "false",
                 errMessage: info.message,
             });
-            //return res.redirect(`/?loginError=${info.message}`);
         }
         return req.login(user, (loginError) => { //passport.serializeUser 호출
             if(loginError){
                 console.error(loginError);
                 return next(loginError);
             }
+            req.session.save(()=>{
+                res.json({
+                    success: "true",
+                    errMessage: null,
+                });
+            })
+        });
+    })(req,res,next);
+})*/
+
+/* 로그인 라우터 */
+router.post('/login', (req,res,next)=>{
+    //session 을 사용하지 않는다. serialize, deserialize 호출하지 않는다.
+    passport.authenticate('local', {session:false}, (authError, user, info) => { //done이 두번째 인수를 실행한다.
+        if(authError) {
+            console.error(authError);
+            return next(authError);
+        }
+        if(!user) {
+            return res.json({
+                success: "false",
+                errMessage: info.message,
+            });
+        }
+        return req.login(user, (loginError) => { 
+            if(loginError){
+                console.error(loginError);
+                return next(loginError);
+            }
+            const token = jwt.sign({
+                id: user.id,
+                nick: user.nick,
+            },process.env.JWT_SECRET,{
+                expiresIn: '30m',
+            });
             res.json({
                 success: "true",
                 errMessage: null,
+                token,
             });
-            //return res.redirect('/');
         });
     })(req,res,next);
 })
+ 
+router.get('/test', verifyToken, (req,res,next)=>{
+    res.json({
+        success: "true",
+        errMessage: null,
+    });
+})
 
-/* 로그아웃 라우터 */
+/* 로그아웃 라우터 
 router.get('/logout', isLoggedIn, (req,res,next)=>{
     req.logout();
     req.session.destroy();
@@ -65,7 +107,7 @@ router.get('/logout', isLoggedIn, (req,res,next)=>{
         success: "true",
         errMessage: null,
     });
-})
+})*/
 
 
 module.exports = router;

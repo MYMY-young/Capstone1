@@ -58,7 +58,7 @@ app.use(passport.session()); //이 미들웨어는 req.session에 passport 정�
 
 app.use('/auth',authRouter);
 app.use('/upload',uploadRouter);
-app.use('/media',isLoggedIn, express.static(path.join(__dirname,'..','yolov5',
+app.use('/media', express.static(path.join(__dirname,'..','yolov5',
     'runs','detect')) ); //static은 public에 파일이 없으면 알아서 next 호출한다.
 
 /* error handling middleware start */
