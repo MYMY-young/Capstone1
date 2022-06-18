@@ -18,7 +18,12 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.BufferedWriter
 import java.io.File
+import java.io.FileWriter
+import java.io.IOException
+import java.nio.file.Paths
+import java.nio.file.StandardOpenOption
 import java.util.concurrent.TimeUnit
 
 
@@ -30,46 +35,27 @@ class LoginActivity : AppCompatActivity() {
     var _passwordText: EditText? = null
     var _loginButton: Button? = null
     var _signupButton: Button? = null
-
+    var YoutubeURL : String = ""
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
 
-        // android downloader
-//    var filename : String = ""
-       // var downloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-        //var downloadId : Long = -1L
-        //
-        //
-//        {
+        YoutubeURL = "http.video.com"
+     //test   writeFile("person_01+long_sleeved_outwear.mp4", "long_sleeved_outwear")
+
+//        val fileData: String = "892XUqlKPH0101.jpg+Skirt+https://youtu.be/892XUqlKPH0+/storage/self/primary/Android/data/com.example.mycloset/files/892XUqlKPH0101.jpg\n" +
+//                "892XUqlKPH0213.jpg+Long Sleeved Outwear+https://youtu.be/892XUqlKPH0+/storage/self/primary/Android/data/com.example.mycloset/files/892XUqlKPH0213.jpg\n" +
+//                "892XUqlKPH0212.jpg+Long Sleeved Outwear+https://youtu.be/892XUqlKPH0+/storage/self/primary/Android/data/com.example.mycloset/files/892XUqlKPH0212.jpg\n"
 //
-//                val file = File(getExternalFilesDir(null), "0+skirt.mp4")
-//                val youtubeUrl = "http://54.180.134.56/media/exp8/highlight/0+skirt.mp4"
-//                val request = DownloadManager.Request(Uri.parse(youtubeUrl))
-//                    .setTitle("Downloading a video")
-//                    .setDescription("Downloading Dev Summit")
-//                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-//                    .setDestinationUri(Uri.fromFile(file))
-//                    .setAllowedOverMetered(true)
-//                    .setAllowedOverRoaming(true)
-//
-//                downloadId = downloadManager.enqueue(request)
-//            Log.d("DownloadHTTP", "path : " + file.path)
-
-//            val status = getStatus(downloadId, downloadManager)
-//            Log.d(TAG, status)
-//            Toast.makeText(this, status, Toast.LENGTH_SHORT).show()
-
-
-//            val intentFilter = IntentFilter()
-//            intentFilter.addAction(DownloadManager.ACTION_DOWNLOAD_COMPLETE)
-//            intentFilter.addAction(DownloadManager.ACTION_NOTIFICATION_CLICKED)
-//            registerReceiver(onDownloadComplete, intentFilter)
-//            downloadHTTP(this, "media/exp8/highlight/0+skirt.mp4", "0+skirt.mp4", downloadManager )
-
-      //  }
-        //
+//        val path = "/data/data/com.example.mycloset/files/myclothes.txt"
+//        val writer = FileWriter(path, true)
+//        try{
+//            writer.write(fileData)
+//        }catch(e : IOException){}
+//        finally{
+//            writer.close()
+//        }
 
 
 
@@ -89,12 +75,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    fun saveLogin(loginEmail : String) {
-        val pref =getSharedPreferences("loginEmail", MODE_PRIVATE) //shared key 설정
-        val edit = pref.edit() // 수정모드
-        edit.putString("email", loginEmail) // 값 넣기
-        edit.apply() // 적용하기
-    }
+
 
     private fun login() {
         Log.d(TAG, "Login")
@@ -177,7 +158,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loginSuccess(email : String){
-        saveLogin(email)
+
         _loginButton!!.isEnabled = true
         startActivity(Intent(this, MainActivity::class.java))
         finish()
@@ -215,6 +196,33 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         private val TAG = "LoginActivity"
         private val REQUEST_SIGNUP = 0
+    }
+
+
+    private fun writeFile(filename: String, category: String){
+        if(filename.substring(filename.lastIndexOf(".") + 1) =="mp4") {//동영상인 경우
+
+//            val fileOutputStream = openFileOutput("mycloset_mp4.txt", Context.MODE_APPEND)
+            val fileData: String = "/storage/self/primary/Android/data/com.example.mycloset/files/$filename+$YoutubeURL\n"
+//            fileOutputStream.write(fileData.toByteArray())
+//            fileOutputStream.close()
+
+            val path = "/data/data/com.example.mycloset/files/mycloset_mp4.txt"
+            val writer = FileWriter(path, true)
+           try{
+               writer.write(fileData)
+           }catch(e : IOException){}
+            finally{
+                writer.close()
+            }
+        }
+        else{
+            val fileOutputStream = openFileOutput("mycloset_jpg.txt", Context.MODE_APPEND)
+            val fileData: String =
+                category + "+" + "/storage/self/primary/Android/data/com.example.mycloset/files/" + filename + "+" + Common.returnVideo() + "\n"
+            fileOutputStream.write(fileData.toByteArray())
+            fileOutputStream.close()
+        }
     }
 
 //    private fun downloadHTTP(context: Context, filePath : String, fileName : String, downloadManager: DownloadManager) {
@@ -273,7 +281,7 @@ class LoginActivity : AppCompatActivity() {
 //
 //        return statusText
 //    }
-//
+////
 //    private val onDownloadComplete = object : BroadcastReceiver() {
 //        override fun onReceive(context: Context, intent: Intent) {
 //            val id = intent.getLongExtra(DownloadManager.EXTRA_DOWNLOAD_ID, -1)

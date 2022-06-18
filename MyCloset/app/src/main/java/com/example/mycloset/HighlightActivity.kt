@@ -17,11 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_highlight.*
 import java.io.File
 
-var highList = arrayListOf<HighInfo>(
-    HighInfo("1_1"),
-    HighInfo("1_2"),
-    HighInfo("2_1")
-)
+var highList = arrayListOf<HighInfo>()
+
 
 class HighlightActivity : AppCompatActivity() {
 
@@ -43,6 +40,38 @@ class HighlightActivity : AppCompatActivity() {
         _videoView.requestFocus()
         _videoView.start()
 
+
+        // "$category+/storage/self/primary/Android/data/com.example.mycloset/files/$filename+$YoutubeURL\n"
+        val Filepath = "$filesDir/mycloset_jpg.txt"
+        if(!File(Filepath).exists()) return
+        File(Filepath).forEachLine {
+            var temp = it
+            var chk = true
+            var _size = videoList.size
+            Log.d(TAG, "Size : ${_size}")
+            val hint = temp.split("+")
+
+            val tempPath = "${hint[1]}"
+
+            if(!File(tempPath).exists())chk = false
+
+            var ImageName = hint[1].substring(hint[1].lastIndexOf("/") + 1)
+            if (_size > 0) {
+
+                for (temp in highList) {
+                    if (temp.imagename == ImageName) {
+                        chk = false
+                        break
+                    }
+                }
+            }
+            if (chk) {
+                highList.add(HighInfo(temp))
+            }
+        }
+
+
+
         _mainButton = findViewById(R.id.high_main_button) as ImageView
         _nextButton = findViewById(R.id.high_next_button) as Button
 
@@ -63,6 +92,8 @@ class HighlightActivity : AppCompatActivity() {
             _nextButton!!.isEnabled = true
             startActivity(Intent(this, FavoritesActivity::class.java))
         }
+
+        //HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>, val clothesList: ArrayList<String>)
 
         val adapter = HighListAdapter(this, highList, clothesList)
         HighRecyclerview.adapter = adapter

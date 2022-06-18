@@ -1,11 +1,14 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import android.widget.ImageView
+import android.widget.VideoView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycloset.VideoListAdapter.Holder
 import com.google.android.youtube.player.YouTubeBaseActivity
@@ -19,16 +22,24 @@ class VideoListAdapter(val context: Context, val itemList : ArrayList<VideoInfo>
         //val thumbnailView = itemView?.findViewById<ImageView>(R.id.video_image)
         val name = itemView?.findViewById<TextView>(R.id.video_name)
         val url = itemView?.findViewById<TextView>(R.id.video_url)
-        val youtubeView = itemView?.findViewById<YouTubePlayerView>(R.id.video_youtube) as YouTubePlayerView
+        val youtubeView = itemView?.findViewById<VideoView>(R.id.video_youtube)
+        val _video_detail = itemView?.findViewById<Button>(R.id.video_detail)
+
+//        val path = Uri.parse("/storage/self/primary/Android/data/com.example.mycloset/files/person_01+long_sleeved_outwear.mp4")
+//        _videoView.setVideoURI(path)
+//        _videoView.requestFocus()
+//        _videoView.start()
 
         fun bind(item: VideoInfo, context: Context) {
-            val videoId = item.videourl.substring(item.videourl.lastIndexOf("/") + 1)
-            //val thumbnailId = "https://img.youtube.com/vi/" + videoId + "/default.jpg"
-            if(videoId != "") {
-                showVideo(youtubeView, videoId)
-            }
-            name?.text = item.videoname
-            url?.text = "URL: " + item.videourl
+
+                val path = Uri.parse(item.videopath)
+                youtubeView?.setVideoURI(path)
+                youtubeView?.requestFocus()
+                youtubeView?.start()
+                _video_detail?.setOnClickListener { youtubeView?.start() }
+                name?.text = item.videoname
+                url?.text = "URL: " + item.videourl
+
         }
     }
 
@@ -45,21 +56,5 @@ class VideoListAdapter(val context: Context, val itemList : ArrayList<VideoInfo>
         holder.bind(itemList[position],context)
     }
 
-    fun showVideo(youtubeView: YouTubePlayerView, videoId: String) {
-        youtubeView.initialize("develop", object : YouTubePlayer.OnInitializedListener {
-            override fun onInitializationSuccess(
-                provider: YouTubePlayer.Provider,
-                player: YouTubePlayer,
-                wasRestored: Boolean
-            ) {
-                if (!wasRestored) {
-                    player.cueVideo(videoId)
-                }
-            }
-            override fun onInitializationFailure(
-                provider: YouTubePlayer.Provider?,
-                result: YouTubeInitializationResult?
-            ) { }
-        })
-    }
+
 }

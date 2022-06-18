@@ -46,19 +46,31 @@ class FavoritesActivity : AppCompatActivity() {
         outwear_favorites.isSelected = false
     }
 
-    fun readFav() {
+    //892XUqlKPH0101.jpg+
+    // Skirt+
+    // https://youtu.be/892XUqlKPH0+
+    // /storage/self/primary/Android/data/com.example.mycloset/files/892XUqlKPH0101.jpg
+
+//
+//    ClothesInfo(val image: String, val clothes: String, val url: String, val Videopath : String) {
+//        var imagename: String = image
+//        var clothesname: String = clothes
+//        var urlname: String = url
+//        var path : String = Videopath
+
+        fun readFav() {
         if(!File("/data/data/com.example.mycloset/files/myclothes.txt").exists()) return
          File("/data/data/com.example.mycloset/files/myclothes.txt").forEachLine {
             var clothes = it.toString().split("+")
-            allList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
-             if(clothes[1].contains("top", true) || clothes[1].contains("vest", true) || clothes[1].contains("sling", true))
-                 topList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
-             if(clothes[1].contains("shorts", true) || clothes[1].contains("trousers", true) || clothes[1].contains("skirt", true))
-                 bottomList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
-             if(clothes[1].contains("dress", true))
-                 dressList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
-             if(clothes[1].contains("outwear", true))
-                 outwearList.add(ClothesInfo(clothes[0], clothes[1], clothes[2]))
+            allList.add(ClothesInfo(clothes[0], clothes[1], clothes[2],clothes[3]))
+             if(clothes[1].contains("Top", true) || clothes[1].contains("Vest", true) || clothes[1].contains("Sling", true))
+                 topList.add(ClothesInfo(clothes[0], clothes[1], clothes[2],clothes[3]))
+             if(clothes[1].contains("Shorts", true) || clothes[1].contains("Trousers", true) || clothes[1].contains("Skirt", true))
+                 bottomList.add(ClothesInfo(clothes[0], clothes[1], clothes[2],clothes[3]))
+             if(clothes[1].contains("Dress", true))
+                 dressList.add(ClothesInfo(clothes[0], clothes[1], clothes[2],clothes[3]))
+             if(clothes[1].contains("Outwear", true))
+                 outwearList.add(ClothesInfo(clothes[0], clothes[1], clothes[2],clothes[3]))
 
              Log.d("clothes", it.toString())
         }

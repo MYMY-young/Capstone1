@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mycloset.ClothesListAdapter.Holder
+
+//ClothesInfo(val image: String, val clothes: String, val url: String, val Videopath : String) {
+//    var imagename: String = image
+//    var clothesname: String = clothes
+//    var urlname: String = url
+//    var path : String = Videopath
 
 class ClothesListAdapter(val context: Context, val itemList : ArrayList<ClothesInfo>) :
     RecyclerView.Adapter<Holder>() {
@@ -18,8 +25,8 @@ class ClothesListAdapter(val context: Context, val itemList : ArrayList<ClothesI
 
         fun bind(item: ClothesInfo, context: Context) {
             if(item.imagename != ""){
-                val resourceId = context.resources.getIdentifier(item.imagename,"drawable", context.packageName)
-                image?.setImageResource(resourceId)
+                val resourceId = Uri.parse(item.path)
+                image?.setImageURI(resourceId)
             } else {
                 image?.setImageResource(R.drawable.closet_logo)
             }

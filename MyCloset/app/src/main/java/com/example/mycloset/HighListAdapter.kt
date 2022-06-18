@@ -1,6 +1,7 @@
 package com.example.mycloset
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,21 +22,21 @@ class HighListAdapter(val context: Context, val itemList : ArrayList<HighInfo>, 
 
         fun bind(item: HighInfo, context: Context) {
             if(item.imagename != ""){
-                val resourceId = context.resources.getIdentifier(item.imagename,"drawable", context.packageName)
-                image?.setImageResource(resourceId)
+                val resourceId = Uri.parse(item.path)
+                image?.setImageURI(resourceId)
             } else {
                 image?.setImageResource(R.drawable.closet_logo)
             }
-            clothes?.text = item.clothesname
+            clothes?.text = item.category
             select!!.setOnClickListener {
                 if(select.isSelected == true) {
                     select.isSelected = false
                 }
                 else {
                     select.isSelected = true
-                    clothesList.add(item.imagename + '+' + item.clothesname + '+' + "https://youtu.be/RmuL-BPFi2Q\n")
+                    clothesList.add(item.imagename + '+' + item.category + '+' + "${item.videourl}+${item.path}\n")
                     for(i in 0.. clothesList.size - 1 step(1))
-                        Log.d("clothes adapter", item.clothesname)
+                        Log.d("clothes adapter", item.category)
                 }
             }
         }

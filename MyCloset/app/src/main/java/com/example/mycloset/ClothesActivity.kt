@@ -1,23 +1,23 @@
 package com.example.mycloset
 
 import android.app.DownloadManager
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.youtube.player.internal.i
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.io.File
+import java.io.FileWriter
+import java.io.IOException
 
 class ClothesActivity : AppCompatActivity() {
 
@@ -56,9 +56,10 @@ class ClothesActivity : AppCompatActivity() {
     var long_sleeve_dress: Boolean = false
     var vest_dress: Boolean = false
     var long_sleeve_outwear: Boolean = false
-
+    var YoutubeURL : String = ""
     // android downloader
 //    var filename : String = ""
+
 
     //
 
@@ -69,12 +70,11 @@ class ClothesActivity : AppCompatActivity() {
         _backButton = findViewById(R.id.clothes_back_button) as ImageView
         _nextButton = findViewById(R.id.clothes_next_button) as Button
         _mainButton = findViewById(R.id.clothes_main_button) as ImageView
-
+        YoutubeURL = Common.returnVideo()
 
         //변수 초기화
         initVariable()
         // downloadManager =  getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
-
 
         _short_sleeve_top.setOnClickListener {
             Log.d(TAG, "체크박스 테스트, ${_short_sleeve_top.isChecked}")
@@ -254,9 +254,12 @@ class ClothesActivity : AppCompatActivity() {
                         Log.d("downcontent", temp.toString())
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
-                                Log.d("downcontent", "파일이름: ${i.substring(i.lastIndexOf("/") + 1)}")
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "short_sleeved_top")
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -267,9 +270,13 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "long_sleeved_top")
 
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -280,9 +287,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "short_sleeved_outwear")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -293,9 +305,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "sling_dress")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -306,9 +323,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "vest")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -319,9 +341,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "sling")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -332,9 +359,13 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "shorts")
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -345,9 +376,13 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "trousers")
 
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -358,10 +393,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
-                                Log.d("downcontent", "파일이름: ${i.substring(i.lastIndexOf("/") + 1)}")
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "skirt")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -372,9 +411,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "short_sleeved_dress")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -385,9 +429,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "long_sleeved_dress")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -398,9 +447,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "vest_dress")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -411,9 +465,14 @@ class ClothesActivity : AppCompatActivity() {
 
                         if (temp != null) {
                             for (i in temp) {
-                                var downloadId: Long = -1L
-                                downloadService(i, i.substring(i.lastIndexOf("/") + 1), downloadId)
 
+                                val filename = i.substring(i.lastIndexOf("/") + 1)
+                                writeFile(filename, "long_sleeved_outwear")
+
+                                downloadService(i, filename)
+                                Log.d("DownLoading Complete", i)
+
+                                Log.d("downcontent", "파일이름: $filename")
                             }
                         }
                     }
@@ -486,31 +545,39 @@ class ClothesActivity : AppCompatActivity() {
 //            }
 //        }
 //    }
-    private fun downloadService(uri: String, filename: String, downloadId : Long) {
-        var downloadManager: DownloadManager =
-            getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
+    private fun downloadService(uri: String, filename: String) {
+       val downloadManager = getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager
 
         val file = File(getExternalFilesDir(null), filename)
-        val Url = "http://54.180.134.56/media/${uri}"
-        Log.d("uri test", Url)
-        Log.d("file name test", filename)
+        val Url = "http://54.180.134.56/media/$uri"
+
 
         val request = DownloadManager.Request(Uri.parse(Url))
             .setTitle(filename)
             .setDescription(filename)
-            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_HIDDEN)
+            .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE)
             .setDestinationUri(Uri.fromFile(file))
             .setAllowedOverMetered(true)
             .setAllowedOverRoaming(true)
             .addRequestHeader("authorization", Common.returnCookie())
 
         var id = downloadManager.enqueue(request)
-       // downloadId = downloadManager.enqueue(request)
-        while(true){
-            if(getStatus(id, downloadManager) == "Successful")break
+        Log.d("uri test", Url)
+        Log.d("file name test", filename)
 
-        }
-        Log.d("DownloadHTTP", "path : " + file.path)
+        Handler().postDelayed({
+            while(true){
+                if(getStatus(id, downloadManager) == "Successful") break
+                Log.d("Status", getStatus(id, downloadManager))
+
+            }
+            }, 5000
+        )
+//        downloadId = downloadManager.enqueue(request)
+
+
+
+
 
     }
 
@@ -543,6 +610,34 @@ class ClothesActivity : AppCompatActivity() {
         }
 
         return statusText
+    }
+
+    private fun writeFile(filename: String, category: String){
+        if(filename.substring(filename.lastIndexOf(".") + 1) =="mp4") {//동영상인 경우
+
+            val fileData: String = "/storage/self/primary/Android/data/com.example.mycloset/files/$filename+$YoutubeURL\n"
+
+            val path = "/data/data/com.example.mycloset/files/mycloset_mp4.txt"
+            val writer = FileWriter(path, true)
+            try{
+                writer.write(fileData)
+            }catch(e : IOException){}
+            finally{
+                writer.close()
+            }
+        }
+        else{
+
+            val fileData: String = "$category+/storage/self/primary/Android/data/com.example.mycloset/files/$filename+$YoutubeURL\n"
+            val path = "/data/data/com.example.mycloset/files/mycloset_jpg.txt"
+            val writer = FileWriter(path, true)
+            try{
+                writer.write(fileData)
+            }catch(e : IOException){}
+            finally{
+                writer.close()
+            }
+        }
     }
 
 
